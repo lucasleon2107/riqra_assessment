@@ -1,7 +1,6 @@
 package com.riqra.assessment.security;
 
 import com.riqra.assessment.domain.services.ApplicationUserService;
-import com.riqra.assessment.security.handlers.JWTAccessDeniedHandler;
 import com.riqra.assessment.security.handlers.JWTAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -34,7 +33,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
-                .accessDeniedHandler(accessDeniedHandler())
                 .authenticationEntryPoint(authenticationEntryPoint())
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager(), applicationUserService))
@@ -62,11 +60,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
         return source;
-    }
-
-    @Bean
-    public AccessDeniedHandler accessDeniedHandler() {
-        return new JWTAccessDeniedHandler();
     }
 
     @Bean

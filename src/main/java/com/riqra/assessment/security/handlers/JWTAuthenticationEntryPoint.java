@@ -19,11 +19,11 @@ public class JWTAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException {
-        logger.info("Authentication failed");
+        logger.info("Access denied");
 
-        httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+        httpServletResponse.setStatus(HttpStatus.FORBIDDEN.value());
 
-        ApiResponse apiResponse = new ApiResponse("Oops! wrong password");
+        ApiResponse apiResponse = new ApiResponse("Unauthorized");
 
         OutputStream out = httpServletResponse.getOutputStream();
         ObjectMapper mapper = new ObjectMapper();

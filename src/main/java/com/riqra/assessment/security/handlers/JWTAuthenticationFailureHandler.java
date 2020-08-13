@@ -5,8 +5,8 @@ import com.riqra.assessment.domain.dtos.response.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,17 +14,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class JWTAccessDeniedHandler implements AccessDeniedHandler {
-
+public class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
-        logger.info("Access denied");
+    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+        logger.info("Authentication failed");
 
-        httpServletResponse.setStatus(HttpStatus.FORBIDDEN.value());
+        httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
 
-        ApiResponse apiResponse = new ApiResponse("Unauthorized");
+        ApiResponse apiResponse = new ApiResponse("Oops! wrong password");
 
         OutputStream out = httpServletResponse.getOutputStream();
         ObjectMapper mapper = new ObjectMapper();

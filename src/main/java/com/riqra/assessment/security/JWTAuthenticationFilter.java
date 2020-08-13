@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.riqra.assessment.domain.entities.ApplicationUser;
 import com.riqra.assessment.domain.services.ApplicationUserService;
+import com.riqra.assessment.security.handlers.JWTAuthenticationFailureHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,6 +35,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                    ApplicationUserService applicationUserService) {
         this.authenticationManager = authenticationManager;
         this.applicationUserService = applicationUserService;
+        super.setAuthenticationFailureHandler(new JWTAuthenticationFailureHandler());
     }
 
     @Override
