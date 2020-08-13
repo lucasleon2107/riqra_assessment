@@ -1,5 +1,5 @@
 
-# Riqra Asessment
+# Riqra Assessment
 ### API URL:
 - https://riqra-assesment.herokuapp.com
 ### Project Documentation: 
